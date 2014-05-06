@@ -10,6 +10,7 @@
 // Import the interfaces
 #import "IntroScene.h"
 #import "HelloWorldScene.h"
+#import <GameKit/GameKit.h>
 
 // -----------------------------------------------------------------------
 #pragma mark - IntroScene
@@ -33,6 +34,31 @@
     // Apple recommend assigning self with supers return value
     self = [super init];
     if (!self) return(nil);
+    
+    
+    GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
+    
+    [localPlayer authenticateWithCompletionHandler:^(NSError *error) {
+        
+        if (localPlayer.isAuthenticated)
+            
+        {
+            
+            NSString* title = @"Signed In!";
+            
+            NSString* message = [NSString stringWithFormat:@"Welcome %@", localPlayer.displayName];
+            
+            [GKNotificationBanner showBannerWithTitle: title message: message
+             
+                                    completionHandler:^{
+                                        
+                                       // [self advanceToNextInterfaceScreen]
+                                        
+                                    }];
+            
+        }
+        
+    }];
     
     // Create a colored background (Dark Grey)
     CCNodeColor *background = [CCNodeColor nodeWithColor:[CCColor colorWithRed:0.2f green:0.2f blue:0.2f alpha:1.0f]];
